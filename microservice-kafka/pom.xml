@@ -22,7 +22,7 @@
 	</modules>
 
 	<properties>
-		<java.version>10</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencyManagement>
