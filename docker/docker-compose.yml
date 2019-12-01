@@ -13,6 +13,7 @@ services:
       KAFKA_CREATE_TOPICS: "order:5:1"
   apache:
     build: apache
+    image: kjtully/microservice-kafka-apache:latest
     links:
      - order
      - shipping
@@ -21,11 +22,13 @@ services:
      - "8080:80"
   postgres:
     build: postgres
+    image: kjtully/microservice-kafka-postgres:latest
     environment:
       POSTGRES_PASSWORD: dbpass
       POSTGRES_USER: dbuser
   order:
     build: ../microservice-kafka/microservice-kafka-order
+    image: kjtully/microservice-kafka-order:latest
     links:
      - kafka
      - postgres
@@ -33,6 +36,7 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   shipping:
     build: ../microservice-kafka/microservice-kafka-shipping
+    image: kjtully/microservice-kafka-shipping:latest
     links:
      - kafka
      - postgres
@@ -40,6 +44,7 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   invoicing:
     build: ../microservice-kafka/microservice-kafka-invoicing
+    image: kjtully/microservice-kafka-invoicing:latest
     links:
      - kafka
      - postgres
