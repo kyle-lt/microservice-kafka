@@ -4,6 +4,7 @@
 # This script will fetch the latest AppDynamics Sun/Oracle Java agent #
 # and place it in /opt/appdynamics/java.                              #
 # This script requires:                                               #
+# curl                                                                #
 # unzip       							      #
 # jq 								      #
 #######################################################################
@@ -28,3 +29,6 @@ mkdir -p /opt/appdynamics/java
 
 # Unzip the agent
 unzip ./JavaAgent.zip -d /opt/appdynamics/java
+
+# Remove the zip
+rm -f ./JavaAgent.zip
