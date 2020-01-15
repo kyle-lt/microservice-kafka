@@ -13,6 +13,7 @@ services:
       KAFKA_CREATE_TOPICS: "order:5:1"
   apache:
     build: apache
+    image: kjtully/microservice-kafka-apache:latest
     links:
      - order
      - shipping
@@ -21,28 +22,58 @@ services:
      - "8080:80"
   postgres:
     build: postgres
+    image: kjtully/microservice-kafka-postgres:latest
     environment:
       POSTGRES_PASSWORD: dbpass
       POSTGRES_USER: dbuser
   order:
     build: ../microservice-kafka/microservice-kafka-order
+    image: kjtully/microservice-kafka-order:latest
     links:
      - kafka
      - postgres
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      APPDYNAMICS_CONTROLLER_HOST_NAME: 192.168.86.40
+      APPDYNAMICS_CONTROLLER_PORT: 8090
+      APPDYNAMICS_CONTROLLER_SSL_ENABLED: "false"
+      APPDYNAMICS_AGENT_ACCOUNT_NAME: customer1
+      APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: 78df80d5-f501-4f94-bafd-d04c78b057be
+      APPDYNAMICS_AGENT_APPLICATION_NAME: Microservices-Kafka
+      APPDYNAMICS_AGENT_TIER_NAME: Order
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: order
   shipping:
     build: ../microservice-kafka/microservice-kafka-shipping
+    image: kjtully/microservice-kafka-shipping:latest
     links:
      - kafka
      - postgres
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      APPDYNAMICS_CONTROLLER_HOST_NAME: 192.168.86.40
+      APPDYNAMICS_CONTROLLER_PORT: 8090
+      APPDYNAMICS_CONTROLLER_SSL_ENABLED: "false"
+      APPDYNAMICS_AGENT_ACCOUNT_NAME: customer1
+      APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: 78df80d5-f501-4f94-bafd-d04c78b057be
+      APPDYNAMICS_AGENT_APPLICATION_NAME: Microservices-Kafka
+      APPDYNAMICS_AGENT_TIER_NAME: Shipping
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: shipping
   invoicing:
     build: ../microservice-kafka/microservice-kafka-invoicing
+    image: kjtully/microservice-kafka-invoicing:latest
     links:
      - kafka
      - postgres
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-
+      APPDYNAMICS_CONTROLLER_HOST_NAME: 192.168.86.40
+      APPDYNAMICS_CONTROLLER_PORT: 8090
+      APPDYNAMICS_CONTROLLER_SSL_ENABLED: "false"
+      APPDYNAMICS_AGENT_ACCOUNT_NAME: customer1
+      APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: 78df80d5-f501-4f94-bafd-d04c78b057be
+      APPDYNAMICS_AGENT_APPLICATION_NAME: Microservices-Kafka
+      APPDYNAMICS_AGENT_TIER_NAME: Invoicing
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: invoicing
