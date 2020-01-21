@@ -2,6 +2,21 @@ version: '3'
 services:
   zookeeper:
     image: kjtully/zookeeper-docker:latest
+    environment:
+      APPDYNAMICS_CONTROLLER_HOST_NAME: 192.168.86.40
+      APPDYNAMICS_CONTROLLER_PORT: 8090
+      APPDYNAMICS_CONTROLLER_SSL_ENABLED: "false"
+      APPDYNAMICS_AGENT_ACCOUNT_NAME: customer1
+      APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: 78df80d5-f501-4f94-bafd-d04c78b057be
+      APPDYNAMICS_AGENT_APPLICATION_NAME: Microservices-Kafka
+      APPDYNAMICS_AGENT_TIER_NAME: Zookeeper
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: zookeeper
+      JVMFLAGS: "$JVM_FLAGS -javaagent:/opt/appdynamics/java/javaagent.jar"
+      APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
+      APPDYNAMICS_NETVIZ_AGENT_PORT: 3892
+    ports:
+      - "2181:2181" 
   kafka:
     image: kjtully/kafka-docker:latest
     links:
@@ -11,6 +26,23 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "order:5:1"
+      KAFKA_OPTS: "$KAFKA_OPTS -javaagent:/opt/appdynamics/java/javaagent.jar"
+      APPDYNAMICS_CONTROLLER_HOST_NAME: 192.168.86.40
+      APPDYNAMICS_CONTROLLER_PORT: 8090
+      APPDYNAMICS_CONTROLLER_SSL_ENABLED: "false"
+      APPDYNAMICS_AGENT_ACCOUNT_NAME: customer1
+      APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY: 78df80d5-f501-4f94-bafd-d04c78b057be
+      APPDYNAMICS_AGENT_APPLICATION_NAME: Microservices-Kafka
+      APPDYNAMICS_AGENT_TIER_NAME: Kafka
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
+      APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: kafka
+      JMX_PORT: 9999
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.rmi.port=9998 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+      APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
+      APPDYNAMICS_NETVIZ_AGENT_PORT: 3892    
+    ports:
+      - "9999:9999"
+      - "9998:9998"
   apache:
     build: apache
     image: kjtully/microservice-kafka-apache:latest
@@ -43,6 +75,8 @@ services:
       APPDYNAMICS_AGENT_TIER_NAME: Order
       APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
       APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: order
+      APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
+      APPDYNAMICS_NETVIZ_AGENT_PORT: 3892
   shipping:
     build: ../microservice-kafka/microservice-kafka-shipping
     image: kjtully/microservice-kafka-shipping:latest
@@ -60,6 +94,8 @@ services:
       APPDYNAMICS_AGENT_TIER_NAME: Shipping
       APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
       APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: shipping
+      APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
+      APPDYNAMICS_NETVIZ_AGENT_PORT: 3892
   invoicing:
     build: ../microservice-kafka/microservice-kafka-invoicing
     image: kjtully/microservice-kafka-invoicing:latest
@@ -77,3 +113,5 @@ services:
       APPDYNAMICS_AGENT_TIER_NAME: Invoicing
       APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME: "true"
       APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME_PREFIX: invoicing
+      APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
+      APPDYNAMICS_NETVIZ_AGENT_PORT: 3892
