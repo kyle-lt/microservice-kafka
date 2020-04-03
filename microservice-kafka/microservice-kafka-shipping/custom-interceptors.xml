@@ -1,0 +1,11 @@
+<custom-interceptors>
+<custom-interceptor>
+<interceptor-class-name>com.singularity.KafkaMarkerMethodInterceptor</interceptor-class-name>
+<match-class type="matches-class">
+<name filter-type="equals">org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer</name>
+</match-class>
+<match-method>
+<name>invokeListener</name>
+</match-method>
+</custom-interceptor>
+</custom-interceptors>
