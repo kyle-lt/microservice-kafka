@@ -30,5 +30,8 @@ mkdir -p /opt/appdynamics/java
 # Unzip the agent
 unzip ./JavaAgent.zip -d /opt/appdynamics/java
 
+# Pass in the custom interceptors file
+cp ./custom-interceptors.xml /opt/appdynamics/java/ver*/conf
+
 # Remove the zip
 rm -f ./JavaAgent.zip
