@@ -1,0 +1,15 @@
+Create Line:
+POST
+Content-Type: application/x-www-form-urlencoded
+http://192.168.86.163:8080/order/line
+customer=5&shippingAddress.street=301+Saddlehorn+Dr&shippingAddress.zip=78620-2740&shippingAddress.city=Dripping+Springs&billingAddress.street=301+Saddlehorn+Dr&billingAddress.zip=78620-2740&billingAddress.city=Dripping+Springs&orderLine%5B0%5D.count=4&orderLine%5B0%5D.item=1&addLine=
+
+Submit order:
+POST
+Content-Type: application/x-www-form-urlencoded
+http://192.168.86.163:8080/order/
+customer=5&shippingAddress.street=301+Saddlehorn+Dr&shippingAddress.zip=78620-2740&shippingAddress.city=Dripping+Springs&billingAddress.street=301+Saddlehorn+Dr&billingAddress.zip=78620-2740&billingAddress.city=Dripping+Springs&orderLine%5B0%5D.count=0&orderLine%5B0%5D.item=1&submit=
+
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "customer=5&shippingAddress.street=301+Saddlehorn+Dr&shippingAddress.zip=78620-2740&shippingAddress.city=Dripping+Springs&billingAddress.street=301+Saddlehorn+Dr&billingAddress.zip=78620-2740&billingAddress.city=Dripping+Springs&orderLine%5B0%5D.count=0&orderLine%5B0%5D.item=1&submit="
+
+curl -d "customer=6&shippingAddress.street=301+Saddlehorn+Dr&shippingAddress.zip=78620-2740&shippingAddress.city=Dripping+Springs&billingAddress.street=301+Saddlehorn+Dr&billingAddress.zip=78620-2740&billingAddress.city=Dripping+Springs&orderLine%5B0%5D.count=5&orderLine%5B0%5D.item=1&orderLine%5B1%5D.count=10&orderLine%5B1%5D.item=1&submit=" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://192.168.86.163:8080/order/
