@@ -2,6 +2,7 @@ version: '3'
 services:
   zookeeper:
     image: kjtully/zookeeper-docker:latest
+    container_name: zookeeper
     environment:
       APPDYNAMICS_CONTROLLER_HOST_NAME: "$APPDYNAMICS_CONTROLLER_HOST_NAME"
       APPDYNAMICS_CONTROLLER_PORT: "$APPDYNAMICS_CONTROLLER_PORT"
@@ -19,6 +20,7 @@ services:
       - "2181:2181" 
   kafka:
     image: kjtully/kafka-docker:latest
+    container_name: kafka
     links:
      - zookeeper
     environment:
@@ -47,6 +49,7 @@ services:
   apache:
     build: apache
     image: kjtully/microservice-kafka-apache:latest
+    container_name: apache
     links:
      - order
      - shipping
@@ -56,12 +59,14 @@ services:
   postgres:
     build: postgres
     image: kjtully/microservice-kafka-postgres:latest
+    container_name: postgres
     environment:
       POSTGRES_PASSWORD: dbpass
       POSTGRES_USER: dbuser
   order:
     build: ../microservice-kafka/microservice-kafka-order
     image: kjtully/microservice-kafka-order:latest
+    container_name: order
     links:
      - kafka
      - postgres
@@ -81,6 +86,7 @@ services:
   shipping:
     build: ../microservice-kafka/microservice-kafka-shipping
     image: kjtully/microservice-kafka-shipping:latest
+    container_name: shipping
     links:
      - kafka
      - postgres
@@ -100,6 +106,7 @@ services:
   invoicing:
     build: ../microservice-kafka/microservice-kafka-invoicing
     image: kjtully/microservice-kafka-invoicing:latest
+    container_name: invoicing
     links:
      - kafka
      - postgres
