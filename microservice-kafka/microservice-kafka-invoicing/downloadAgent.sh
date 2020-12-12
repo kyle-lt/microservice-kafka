@@ -13,7 +13,7 @@
 DOWNLOAD_PATH=https://download-files.appdynamics.com/
 
 # Fetch latest Sun Java Agent download path from AppD
-FILE_PATH=$(curl https://download.appdynamics.com/download/downloadfilelatest/ | jq -r '.[].s3_path' | grep sun)
+FILE_PATH=$(curl https://download.appdynamics.com/download/downloadfilelatest/ | jq -r '.[].s3_path' | grep java-jdk8)
 
 # Construct the full URL
 DOWNLOAD_PATH=$DOWNLOAD_PATH$FILE_PATH

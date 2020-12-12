@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: zookeeper:latest
+    container_name: zookeeper-new
+    environment:
+      JVMFLAGS: "$JVM_FLAGS -javaagent:/opt/appdynamics/java/javaagent.jar"
+      MYTESTENVVAR: "MY_TEST_ENV_VAR_VAL"
+    ports:
+      - "2181:2181"

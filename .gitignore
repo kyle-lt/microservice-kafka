@@ -16,3 +16,4 @@ buildNumber.properties
 .mvn/timing.properties
 .vscode
 JavaAgent.zip
+.jar

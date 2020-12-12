@@ -1,3 +1,18 @@
+# Background
+
+This repo contains a Spring Boot Java microservices application that uses Kafka
+(and Zookeeper) as the messaging framework between tiers, and a PostgreSQL backend.
+
+Each Java runtime is instrumented with the AppDynamics Java Agent.
+
+//TODO - finish README! :)
+
+# Reference
+
+I used [this repo](https://github.com/ewolff/microservice-kafka) as a starting point.
+
+The original Repo's README below.
+
 Microservice Kafka Sample
 ==================
 
