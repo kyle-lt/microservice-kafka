@@ -111,7 +111,7 @@ APPDYNAMICS_CONTROLLER_SSL_ENABLED=<true_or_false>
 ## Development/Testing
 This repo contains some artifacts to ease re-builds for testing.
 - `createOrders.sh`
-   - This script creates 4 orders, and a decent way to drive some basic load is to use watch
+   - This script creates 4 orders, and a decent way to drive some basic load is to use `watch`
    ```bash
    $ watch -n 30 ./createOrder.sh
    ```
