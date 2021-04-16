@@ -1,4 +1,4 @@
-# Microservices-Kafka
+# Microservice-Kafka
 
 ## Overview
 This repo contains a Spring Boot Java microservices application that uses Kafka
@@ -20,8 +20,8 @@ In order to run this project, you'll need:
    > __Note:__  The Docker versions must support Docker Compose File version 3.0+
 
 ### Steps to Run
-1. Clone this repository to your local machine.
-2. Copy the `.env_public` file to a file named `.env` file in the root project directory, and configure appropriately.
+1. Clone this repository to your local machine, and change into the root directory (`microservice-kafka`)
+2. Change into the `docker` directory, and copy the `.env_public` file to a file named `.env`, and configure appropriately.
 
    > __IMPORTANT:__ Detailed information regarding `.env` file can be found [below](#env-file).  This __MUST__ be done for this project to work!
 3. Use Docker Compose to start
@@ -42,13 +42,13 @@ If you'd like to build the project locally, you'll need:
 - Docker Compose
 
 ### Steps to Build
-1. Clone this repository to your local machine.
-2. Change into the *second* `microservices-kafka` directory, e.g., `~/Projects/microservices-kafka/microservices-kafka`
+1. Clone this repository to your local machine, and change into the root directory (`microservice-kafka`).
+2. Change into the *second* `microservice-kafka` directory, e.g., `~/Projects/microservice-kafka/microservice-kafka`
 3. Using the provided `mvnw` binary, build the project (and skip the tests :) )
 ```bash
 $ ./mvnw clean package -DskipTests
 ```
-4. Change into the `microservices-kafka/docker` directory, and copy the `.env_public` file to a file named `.env` file in the root project directory, and configure appropriately.
+4. Change into the `docker` directory (which is located in the root project directory), and copy the `.env_public` file to a file named `.env`, and configure appropriately.
 
    > __IMPORTANT:__ Detailed information regarding `.env` file can be found [below](###-.env-File).  This __MUST__ be done for this project to work!
 4. Uncomment the build directives for the `apache`, `postgres`, `order`, `shipping`, and `invoicing` services in `docker-compose.yml`.
@@ -87,7 +87,7 @@ Spring Boot microservice, also a Kafka Consumer.
 
 
 ### Application Code
-The app code is housed in the *second* `microservices-kafka` directory, and then each microservice has its own subdirectory.  Each directory contains source code and a `Dockerfile`.  There is also a script called `downloadAgent.sh` which is a helper to download and place the AppD Java agent bits in each container.
+The app code is housed in the *second* `microservice-kafka` directory, and then each microservice has its own subdirectory.  Each directory contains source code and a `Dockerfile`.  There is also a script called `downloadAgent.sh` which is a helper to download and place the AppD Java agent bits in each container.
 
 ### docker-compose.yml
 This file is located in the project root and manages building and running the Docker containers. It uses the `.env` file to populate environment variables for the project to work properly.
