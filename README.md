@@ -37,23 +37,22 @@ $ docker-compose up -d
 ### Prerequisites
 If you'd like to build the project locally, you'll need:
 - Java 1.8+
-- Maven 3.x
+- Maven 3.x (or you can use the provided `mvnw` binary)
 - Docker
 - Docker Compose
 
 ### Steps to Build
 1. Clone this repository to your local machine.
 2. Change into the *second* `microservices-kafka` directory, e.g., `~/Projects/microservices-kafka/microservices-kafka`
-3. Using the provided `mvnw` binary, build the project
+3. Using the provided `mvnw` binary, build the project (and skip the tests :) )
 ```bash
-# Move into app directory
 $ ./mvnw clean package -DskipTests
 ```
 4. Change into the `microservices-kafka/docker` directory, and copy the `.env_public` file to a file named `.env` file in the root project directory, and configure appropriately.
 
    > __IMPORTANT:__ Detailed information regarding `.env` file can be found [below](###-.env-File).  This __MUST__ be done for this project to work!
 4. Uncomment the build directives for the `apache`, `postgres`, `order`, `shipping`, and `invoicing` services in `docker-compose.yml`.
-5. Build the containers and ensure they succeed
+5. Build the containers
 ```bash
 $ docker-compose build 
 ```
@@ -107,7 +106,7 @@ APPDYNAMICS_CONTROLLER_SSL_ENABLED=<true_or_false>
 ```
 > __Tip:__  Documentation on these configuration properties can be found in the [AppDynamics Java Agent Configuration Documentation](https://docs.appdynamics.com/display/PRO45/Java+Agent+Configuration+Properties)
 
-**The rest of the environment variables in the `.env` file can be left with default values.**
+**If applicable, the rest of the environment variables in the `.env` file can be left with default values.**
 
 ## Development/Testing
 This repo contains some artifacts to ease re-builds for testing.
