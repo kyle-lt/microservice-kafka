@@ -1,13 +1,124 @@
-# Background
+# Microservices-Kafka
 
+## Overview
 This repo contains a Spring Boot Java microservices application that uses Kafka
 (and Zookeeper) as the messaging framework between tiers, and a PostgreSQL backend.
 
 Each Java runtime is instrumented with the AppDynamics Java Agent.
 
-//TODO - finish README! :)
+It's not necessary to build this project.  All images can be pulled from Docker Hub when you run with [Docker Compose](#quick-start-with-docker-compose).
 
-# Reference
+Once up and running, assuming you are running on your local machine, access the Home Page at `http://localhost:8080`.
+
+## Quick Start with Docker Compose
+### Prerequisites
+In order to run this project, you'll need:
+- Docker
+- Docker Compose  
+  <br />  
+  
+   > __Note:__  The Docker versions must support Docker Compose File version 3.0+
+
+### Steps to Run
+1. Clone this repository to your local machine.
+2. Copy the `.env_public` file to a file named `.env` file in the root project directory, and configure appropriately.
+
+   > __IMPORTANT:__ Detailed information regarding `.env` file can be found [below](#env-file).  This __MUST__ be done for this project to work!
+3. Use Docker Compose to start
+```bash
+$ docker-compose up -d
+```
+4. Access front-end UI on `http://$DOCKER_HOSTNAME:8080`.
+
+   > __Note:__  Default configuration assumes localhost/127.0.0.1, so navigate to `http://127.0.0.1:8080`.
+
+## Build
+> __Note:__ the build process requires internet access.
+### Prerequisites
+If you'd like to build the project locally, you'll need:
+- Java 1.8+
+- Maven 3.x
+- Docker
+- Docker Compose
+
+### Steps to Build
+1. Clone this repository to your local machine.
+2. Change into the *second* `microservices-kafka` directory, e.g., `~/Projects/microservices-kafka/microservices-kafka`
+3. Using the provided `mvnw` binary, build the project
+```bash
+# Move into app directory
+$ ./mvnw clean package -DskipTests
+```
+4. Change into the `microservices-kafka/docker` directory, and copy the `.env_public` file to a file named `.env` file in the root project directory, and configure appropriately.
+
+   > __IMPORTANT:__ Detailed information regarding `.env` file can be found [below](###-.env-File).  This __MUST__ be done for this project to work!
+4. Uncomment the build directives for the `apache`, `postgres`, `order`, `shipping`, and `invoicing` services in `docker-compose.yml`.
+5. Build the containers and ensure they succeed
+```bash
+$ docker-compose build 
+```
+5. Use Docker Compose to start
+```bash
+$ docker-compose up -d
+```
+
+## Docker Compose Services
+### zookeeper
+Zookeeper Image, altered by adding the AppD Java Agent.  
+
+### kafka
+Kafka Image, altered by adding the AppD Java Agent.  
+
+### apache
+Apache Web Server Image.  
+
+By default, accessible on `http://$DOCKER_HOSTNAME:8080`.
+
+### postgres
+PostgreSQL Image, used for microservices backend.
+
+### order
+Spring Boot microservice, also the Kafka Producer.
+
+### shipping
+Spring Boot microservice, also a Kafka Consumer.
+
+### invoicing
+Spring Boot microservice, also a Kafka Consumer.
+
+
+### Application Code
+The app code is housed in the *second* `microservices-kafka` directory, and then each microservice has its own subdirectory.  Each directory contains source code and a `Dockerfile`.  There is also a script called `downloadAgent.sh` which is a helper to download and place the AppD Java agent bits in each container.
+
+### docker-compose.yml
+This file is located in the project root and manages building and running the Docker containers. It uses the `.env` file to populate environment variables for the project to work properly.
+
+### .env File
+This file contains all of the environment variables that need to be populated in order for the project to run, and for the performance tools to operate.  Items that *must* be tailored to your environment are:
+
+#### AppDynamics Controller Configuration
+```bash
+# AppD Java Agent
+APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY=<Access_Key>
+APPDYNAMICS_AGENT_ACCOUNT_NAME=<Account_Name>
+APPDYNAMICS_CONTROLLER_HOST_NAME=<Controller_Host>
+APPDYNAMICS_CONTROLLER_PORT=<Controller_Port>
+APPDYNAMICS_CONTROLLER_SSL_ENABLED=<true_or_false>
+```
+> __Tip:__  Documentation on these configuration properties can be found in the [AppDynamics Java Agent Configuration Documentation](https://docs.appdynamics.com/display/PRO45/Java+Agent+Configuration+Properties)
+
+**The rest of the environment variables in the `.env` file can be left with default values.**
+
+## Development/Testing
+This repo contains some artifacts to ease re-builds for testing.
+- `createOrders.sh`
+   - This script creates 4 orders, and a decent way to drive some basic load is to use watch
+   ```bash
+   $ watch -n 30 ./createOrder.sh
+   ```
+
+
+### Reference
 
 I used [this repo](https://github.com/ewolff/microservice-kafka) as a starting point.
 

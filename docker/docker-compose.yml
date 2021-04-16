@@ -47,7 +47,7 @@ services:
       - "9999:9999"
       - "9998:9998"
   apache:
-    build: apache
+    #build: apache
     image: kjtully/microservice-kafka-apache:latest
     container_name: apache
     links:
@@ -57,14 +57,14 @@ services:
     ports:
      - "8080:80"
   postgres:
-    build: postgres
+    #build: postgres
     image: kjtully/microservice-kafka-postgres:latest
     container_name: postgres
     environment:
       POSTGRES_PASSWORD: dbpass
       POSTGRES_USER: dbuser
   order:
-    build: ../microservice-kafka/microservice-kafka-order
+    #build: ../microservice-kafka/microservice-kafka-order
     image: kjtully/microservice-kafka-order:latest
     container_name: order
     links:
@@ -84,7 +84,7 @@ services:
       APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
       APPDYNAMICS_NETVIZ_AGENT_PORT: 3892
   shipping:
-    build: ../microservice-kafka/microservice-kafka-shipping
+    #build: ../microservice-kafka/microservice-kafka-shipping
     image: kjtully/microservice-kafka-shipping:latest
     container_name: shipping
     links:
@@ -104,7 +104,7 @@ services:
       APPDYNAMICS_NETVIZ_AGENT_HOST: 172.17.0.1
       APPDYNAMICS_NETVIZ_AGENT_PORT: 3892
   invoicing:
-    build: ../microservice-kafka/microservice-kafka-invoicing
+    #build: ../microservice-kafka/microservice-kafka-invoicing
     image: kjtully/microservice-kafka-invoicing:latest
     container_name: invoicing
     links:
